@@ -97,12 +97,16 @@ unsigned short btchip_apdu_hash_input_start() {
                 (G_coin_config->kind == COIN_KIND_BITCOIN_CASH ? usingCashAddr
                                                                : 0);
             btchip_context_D.usingOverwinter = 0;
-            if ((G_coin_config->kind == COIN_KIND_ZCASH) || (G_coin_config->kind == COIN_KIND_KOMODO) || (G_coin_config->kind == COIN_KIND_ZCLASSIC) || (G_coin_config->kind == COIN_KIND_RESISTANCE)) {
+            PRINTF("Coin kind: %d\n", G_coin_config->kind);
+            if ((G_coin_config->kind == COIN_KIND_ZCASH) || (G_coin_config->kind == COIN_KIND_KOMODO) || (G_coin_config->kind == COIN_KIND_ZCLASSIC) || (G_coin_config->kind == COIN_KIND_RESISTANCE) || (G_coin_config->kind == COIN_KIND_BITCOINZ)) {
+                PRINTF("COIN KIND is something ZCash-like\n");
                 if (G_io_apdu_buffer[ISO_OFFSET_P2] == P2_NEW_SEGWIT_OVERWINTER) {
+                    PRINTF("Processing P2_NEW_SEGWIT_OVERWINTER\n");
                     btchip_context_D.usingOverwinter = ZCASH_USING_OVERWINTER;
                 }
                 else
                 if (G_io_apdu_buffer[ISO_OFFSET_P2] == P2_NEW_SEGWIT_SAPLING) {
+                    PRINTF("Processing P2_NEW_SEGWIT_SAPLING\n");
                     btchip_context_D.usingOverwinter = ZCASH_USING_OVERWINTER_SAPLING;
                 }
             }

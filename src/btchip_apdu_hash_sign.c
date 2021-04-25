@@ -158,7 +158,7 @@ unsigned short btchip_apdu_hash_sign() {
             // Then discard the transaction and reply
         }
         CATCH_ALL {
-            sw = SW_TECHNICAL_DETAILS(0xF);
+            sw = SW_TECHNICAL_DETAILS(0x33);
         catch_discardTransaction:
             btchip_context_D.transactionContext.transactionState =
                 BTCHIP_TRANSACTION_NONE;

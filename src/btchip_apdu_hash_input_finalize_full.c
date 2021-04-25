@@ -483,7 +483,7 @@ unsigned short btchip_apdu_hash_input_finalize_full_internal(
             sw = BTCHIP_SW_OK;
         }
         CATCH_ALL {
-            sw = SW_TECHNICAL_DETAILS(0x0F);
+            sw = SW_TECHNICAL_DETAILS(0x55);
         catch_discardTransaction:
             btchip_context_D.transactionContext.transactionState =
                 BTCHIP_TRANSACTION_NONE;

@@ -26,7 +26,8 @@
 // Check if fOverwintered flag is set and if nVersion is >= 0x03
 #define TRUSTED_INPUT_OVERWINTER ( (G_coin_config->kind == COIN_KIND_ZCASH || \
                                     G_coin_config->kind == COIN_KIND_ZCLASSIC || \
-                                    G_coin_config->kind == COIN_KIND_KOMODO) && \
+                                    G_coin_config->kind == COIN_KIND_KOMODO || \
+                                    G_coin_config->kind == COIN_KIND_BITCOINZ) && \
                                     (btchip_read_u32(btchip_context_D.transactionVersion, 0, 0) & (1<<31)) && \
                                     (btchip_read_u32(btchip_context_D.transactionVersion, 0, 0) ^ (1<<31)) >= 0x03 \
                                 )
@@ -258,8 +259,8 @@ void transaction_parse(unsigned char parseMode) {
                                btchip_context_D.transactionBufferPointer, 4);
                     transaction_offset_increase(4);
 
-                    if (btchip_context_D.usingOverwinter ||
-                        TRUSTED_INPUT_OVERWINTER) {
+                    PRINTF("Using overwinter? %d\n", btchip_context_D.usingOverwinter || TRUSTED_INPUT_OVERWINTER);
+                    if (btchip_context_D.usingOverwinter || TRUSTED_INPUT_OVERWINTER) {
                         // nVersionGroupId
                         check_transaction_available(4);
                         os_memmove(btchip_context_D.nVersionGroupId,
@@ -304,7 +305,6 @@ void transaction_parse(unsigned char parseMode) {
 
                 case BTCHIP_TRANSACTION_DEFINED_WAIT_INPUT: {
                     unsigned char trustedInputFlag = 1;
-                    PRINTF("Process input\n");
                     if (btchip_context_D.transactionContext
                             .transactionRemainingInputsOutputs == 0) {
                         // No more inputs to hash, move forward
@@ -353,7 +353,7 @@ void transaction_parse(unsigned char parseMode) {
                             trustedInputFlag = 0;
                             break;
                         default:
-                            PRINTF("Invalid trusted input flag\n");
+                            PRINTF("Invalid trusted input flag: %d\n", *btchip_context_D.transactionBufferPointer);
                             goto fail;
                         }
                         /*
