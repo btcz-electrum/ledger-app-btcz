@@ -35,8 +35,8 @@ if [ ! -d dev-env ]; then
     wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -O gcc-arm-none-eabi-linux.tar.bz2
     tar xf gcc-arm-none-eabi-linux.tar.bz2 -C gcc-arm-none-eabi-linux
     rm gcc-arm-none-eabi-linux.tar.bz2
-    cp -r gcc-arm-none-eabi-linux dev-env/CC/nanox/gcc-arm-none-eabi-linux
-    mv gcc-arm-none-eabi-linux dev-env/CC/others/gcc-arm-none-eabi-linux
+    cp -r gcc-arm-none-eabi-* dev-env/CC/nanox/gcc-arm-none-eabi-linux
+    mv gcc-arm-none-eabi-* dev-env/CC/others/gcc-arm-none-eabi-linux
 
     wget https://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz -O clang+llvm.tar.xz
     tar xf clang+llvm.tar.xz
